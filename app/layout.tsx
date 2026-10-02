@@ -14,6 +14,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
        <NavBar />
         {children}
+        <footer className="text-center text-sm text-slate-500 py-8">
+  <a href="/privacy" className="underline mr-4">Privacy Policy</a>
+  <a href="/terms" className="underline">Terms of Service</a>
+</footer>
       </body>
     </html>
   )
