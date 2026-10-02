@@ -67,7 +67,7 @@ export default function CartPage() {
               <div key={i.product_id} className="flex items-center justify-between border-b border-slate-100 py-4">
                 <div>
                   <div className="font-semibold">{p.name}</div>
-                  <div className="text-blue-700 font-bold">${Number(p.price).toFixed(2)}</div>
+                  <div className="text-blue-700 font-bold">₦{Number(p.price).toFixed(2)}</div>
                 </div>
                 <div className="flex items-center gap-3">
                   <button onClick={() => changeQty(i.product_id, -1)} className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200">-</button>
@@ -78,7 +78,7 @@ export default function CartPage() {
             )
           })}
           <div className="flex items-center justify-between mt-6">
-            <p className="text-2xl font-bold">Total: ${total.toFixed(2)}</p>
+            <p className="text-2xl font-bold">Total: ₦{total.toFixed(2)}</p>
             <Link href="/checkout" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-full">
               Go to checkout
             </Link>

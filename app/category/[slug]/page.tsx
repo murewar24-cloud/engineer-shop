@@ -42,7 +42,7 @@ export default async function CategoryPage({
 </div>
             <div className="p-4">
               <div className="font-semibold">{p.name}</div>
-              <div className="text-blue-700 font-bold">${Number(p.price).toFixed(2)}</div>
+              <div className="text-blue-700 font-bold">₦{Number(p.price).toFixed(2)}</div>
             </div>
           </Link>
         ))}

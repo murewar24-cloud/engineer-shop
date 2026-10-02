@@ -40,7 +40,7 @@ export default async function ProductPage({
         <div>
           <h1 className="text-3xl font-bold mb-3">{product.name}</h1>
           <p className="text-slate-600 mb-4">{product.description}</p>
-          <p className="text-3xl font-bold text-blue-700 mb-2">${Number(product.price).toFixed(2)}</p>
+          <p className="text-3xl font-bold text-blue-700 mb-2">₦{Number(product.price).toFixed(2)}</p>
           <p className="text-sm text-slate-500 mb-6">{product.stock} in stock</p>
           <AddToCartButton productId={product.id} />
         </div>

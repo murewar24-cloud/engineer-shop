@@ -1,13 +1,11 @@
 'use client'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
-import { getCart, saveCart } from '@/lib/cart'
+import { getCart } from '@/lib/cart'
 import LoginButton from '@/components/LoginButton'
 
 export default function CheckoutPage() {
-  const router = useRouter()
   const [email, setEmail] = useState<string | null>(null)
   const [checking, setChecking] = useState(true)
   const [fullName, setFullName] = useState('')
@@ -44,14 +42,13 @@ export default function CheckoutPage() {
       body: JSON.stringify({ fullName, address, items }),
     })
     const result = await res.json()
-    setSubmitting(false)
 
     if (!res.ok) {
+      setSubmitting(false)
       setError(result.error || 'Something went wrong.')
       return
     }
-    saveCart([])
-    router.push(`/order-success/${result.orderId}`)
+    window.location.href = result.url
   }
 
   if (checking) return <main className="max-w-xl mx-auto px-4 py-10">Loading...</main>
@@ -99,7 +96,7 @@ export default function CheckoutPage() {
             disabled={submitting}
             className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-full disabled:opacity-50"
           >
-            {submitting ? 'Placing order...' : 'Place order'}
+            {submitting ? 'Redirecting to payment...' : 'Pay now'}
           </button>
         </form>
       </div>

@@ -68,7 +68,7 @@ export default function OrdersPage() {
               </div>
             ))}
             <div className="flex justify-between mt-3 font-bold">
-              <span>Total: ${Number(o.total).toFixed(2)}</span>
+              <span>Total: ₦{Number(o.total).toFixed(2)}</span>
               <span className="text-sm font-normal text-slate-500 capitalize">{o.status}</span>
             </div>
           </div>
