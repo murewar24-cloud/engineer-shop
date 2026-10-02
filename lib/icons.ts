@@ -4,6 +4,7 @@ export function categoryIcon(slug?: string) {
     'hand-tools': '🔧',
     'electronics': '🔌',
     'safety-gear': '🦺',
+    'drawing-tools': '📐',
   }
   return icons[slug ?? ''] ?? '🛠️'
 }
