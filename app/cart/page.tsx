@@ -46,39 +46,44 @@ export default function CartPage() {
     return sum + (p ? Number(p.price) * i.quantity : 0)
   }, 0)
 
-  if (loading) return <main className="p-8">Loading...</main>
+  if (loading) return <main className="max-w-3xl mx-auto px-4 py-10">Loading...</main>
 
   return (
-    <main className="p-8 max-w-2xl">
-      <Link href="/" className="underline">← Keep shopping</Link>
+    <main className="max-w-3xl mx-auto px-4 py-10">
+      <Link href="/" className="text-blue-700 hover:underline">← Keep shopping</Link>
       <h1 className="text-3xl font-bold my-6">Your Cart</h1>
 
       {cart.length === 0 ? (
-        <p>Your cart is empty.</p>
+        <div className="bg-white rounded-xl shadow-sm p-10 text-center">
+          <div className="text-6xl mb-4">🛒</div>
+          <p className="text-slate-600">Your cart is empty.</p>
+        </div>
       ) : (
-        <>
+        <div className="bg-white rounded-xl shadow-sm p-6">
           {cart.map((i) => {
             const p = products.find((x) => x.id === i.product_id)
             if (!p) return null
             return (
-              <div key={i.product_id} className="flex items-center justify-between border-b py-3">
+              <div key={i.product_id} className="flex items-center justify-between border-b border-slate-100 py-4">
                 <div>
                   <div className="font-semibold">{p.name}</div>
-                  <div>${Number(p.price).toFixed(2)}</div>
+                  <div className="text-blue-700 font-bold">${Number(p.price).toFixed(2)}</div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <button onClick={() => changeQty(i.product_id, -1)} className="border px-3 rounded">-</button>
-                  <span>{i.quantity}</span>
-                  <button onClick={() => changeQty(i.product_id, 1)} className="border px-3 rounded">+</button>
+                  <button onClick={() => changeQty(i.product_id, -1)} className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200">-</button>
+                  <span className="w-6 text-center">{i.quantity}</span>
+                  <button onClick={() => changeQty(i.product_id, 1)} className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200">+</button>
                 </div>
               </div>
             )
           })}
-          <p className="text-2xl font-bold mt-6">Total: ${total.toFixed(2)}</p>
-          <Link href="/checkout" className="inline-block mt-4 bg-green-600 text-white px-6 py-3 rounded">
-            Go to checkout
-          </Link>
-        </>
+          <div className="flex items-center justify-between mt-6">
+            <p className="text-2xl font-bold">Total: ${total.toFixed(2)}</p>
+            <Link href="/checkout" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-full">
+              Go to checkout
+            </Link>
+          </div>
+        </div>
       )}
     </main>
   )

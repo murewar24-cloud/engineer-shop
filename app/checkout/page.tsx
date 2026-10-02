@@ -54,48 +54,55 @@ export default function CheckoutPage() {
     router.push(`/order-success/${result.orderId}`)
   }
 
-  if (checking) return <main className="p-8">Loading...</main>
+  if (checking) return <main className="max-w-xl mx-auto px-4 py-10">Loading...</main>
 
   if (!email) {
     return (
-      <main className="p-8 max-w-xl">
-        <h1 className="text-3xl font-bold mb-4">Checkout</h1>
-        <p className="mb-4">Please sign in to place your order.</p>
-        <LoginButton />
+      <main className="max-w-xl mx-auto px-4 py-10">
+        <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+          <h1 className="text-3xl font-bold mb-4">Checkout</h1>
+          <p className="mb-6 text-slate-600">Please sign in to place your order.</p>
+          <div className="flex justify-center">
+            <LoginButton />
+          </div>
+        </div>
       </main>
     )
   }
 
   return (
-    <main className="p-8 max-w-xl">
-      <Link href="/cart" className="underline">← Back to cart</Link>
-      <h1 className="text-3xl font-bold my-6">Checkout</h1>
-      <p className="mb-4">Ordering as {email}</p>
+    <main className="max-w-xl mx-auto px-4 py-10">
+      <Link href="/cart" className="text-blue-700 hover:underline">← Back to cart</Link>
+      <div className="bg-white rounded-xl shadow-sm p-8 mt-6">
+        <h1 className="text-3xl font-bold mb-2">Checkout</h1>
+        <p className="mb-6 text-slate-600">Ordering as {email}</p>
 
-      <form onSubmit={placeOrder} className="flex flex-col gap-4">
-        <input
-          required
-          value={fullName}
-          onChange={(e) => setFullName(e.target.value)}
-          placeholder="Full name"
-          className="border rounded p-3 text-black"
-        />
-        <textarea
-          required
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-          placeholder="Delivery address"
-          className="border rounded p-3 text-black"
-        />
-        {error && <p className="text-red-500">{error}</p>}
-        <button
-          type="submit"
-          disabled={submitting}
-          className="bg-green-600 text-white px-6 py-3 rounded disabled:opacity-50"
-        >
-          {submitting ? 'Placing order...' : 'Place order'}
-        </button>
-      </form>
+        <form onSubmit={placeOrder} className="flex flex-col gap-4">
+          <input
+            required
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+            placeholder="Full name"
+            className="border border-slate-300 rounded-lg p-3 text-black"
+          />
+          <textarea
+            required
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            placeholder="Delivery address"
+            rows={4}
+            className="border border-slate-300 rounded-lg p-3 text-black"
+          />
+          {error && <p className="text-red-600">{error}</p>}
+          <button
+            type="submit"
+            disabled={submitting}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-full disabled:opacity-50"
+          >
+            {submitting ? 'Placing order...' : 'Place order'}
+          </button>
+        </form>
+      </div>
     </main>
   )
 }
