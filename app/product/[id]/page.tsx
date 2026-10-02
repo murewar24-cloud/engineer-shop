@@ -30,9 +30,13 @@ export default async function ProductPage({
     <main className="max-w-4xl mx-auto px-4 py-10">
       <Link href="/" className="text-blue-700 hover:underline">← Home</Link>
       <div className="grid md:grid-cols-2 gap-8 mt-6 bg-white rounded-xl shadow-sm p-6">
-        <div className="bg-slate-100 rounded-xl h-64 flex items-center justify-center text-8xl">
-          {categoryIcon(category?.slug)}
-        </div>
+        <div className="bg-slate-100 rounded-xl h-64 flex items-center justify-center text-8xl overflow-hidden">
+  {product.image_url ? (
+    <img src={product.image_url} alt={product.name} className="w-full h-full object-cover" />
+  ) : (
+    categoryIcon(category?.slug)
+  )}
+</div>
         <div>
           <h1 className="text-3xl font-bold mb-3">{product.name}</h1>
           <p className="text-slate-600 mb-4">{product.description}</p>

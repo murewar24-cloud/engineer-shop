@@ -33,9 +33,13 @@ export default async function CategoryPage({
             href={`/product/${p.id}`}
             className="bg-white rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition overflow-hidden"
           >
-            <div className="bg-slate-100 h-36 flex items-center justify-center text-6xl">
-              {categoryIcon(slug)}
-            </div>
+            <div className="bg-slate-100 h-36 flex items-center justify-center text-6xl overflow-hidden">
+  {p.image_url ? (
+    <img src={p.image_url} alt={p.name} className="w-full h-full object-cover" />
+  ) : (
+    categoryIcon(slug)
+  )}
+</div>
             <div className="p-4">
               <div className="font-semibold">{p.name}</div>
               <div className="text-blue-700 font-bold">${Number(p.price).toFixed(2)}</div>
