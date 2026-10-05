@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 
 export default function LoginButton() {
@@ -11,15 +12,10 @@ export default function LoginButton() {
     })
   }, [])
 
-  const login = () =>
-    supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: { redirectTo: window.location.origin },
-    })
-
   const logout = async () => {
     await supabase.auth.signOut()
     setEmail(null)
+    window.dispatchEvent(new Event('cart-updated'))
   }
 
   if (email) {
@@ -34,8 +30,8 @@ export default function LoginButton() {
   }
 
   return (
-    <button onClick={login} className="bg-blue-600 text-white px-4 py-2 rounded">
-      Sign in with Google
-    </button>
+    <Link href="/login" className="bg-blue-600 text-white px-4 py-2 rounded">
+      Sign in
+    </Link>
   )
 }

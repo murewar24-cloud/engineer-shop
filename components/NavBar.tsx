@@ -8,10 +8,17 @@ export default function Navbar() {
   const [count, setCount] = useState(0)
 
   useEffect(() => {
-    const update = () => setCount(getCart().reduce((s, i) => s + i.quantity, 0))
+    const update = async () => {
+      const cart = await getCart()
+      setCount(cart.reduce((s, i) => s + i.quantity, 0))
+    }
     update()
+    const timer = setInterval(update, 3000)
     window.addEventListener('cart-updated', update)
-    return () => window.removeEventListener('cart-updated', update)
+    return () => {
+      clearInterval(timer)
+      window.removeEventListener('cart-updated', update)
+    }
   }, [])
 
   return (

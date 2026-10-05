@@ -23,7 +23,7 @@ export default function CheckoutPage() {
   const placeOrder = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
-    const items = getCart()
+    const items = await getCart()
     if (items.length === 0) {
       setError('Your cart is empty.')
       return

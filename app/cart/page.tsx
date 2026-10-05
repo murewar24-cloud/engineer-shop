@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
-import { getCart, saveCart, CartItem } from '@/lib/cart'
+import { getCart, setQuantity, CartItem } from '@/lib/cart'
 
 type Product = { id: number; name: string; price: number }
 
@@ -11,34 +11,30 @@ export default function CartPage() {
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    const items = getCart()
+  const load = async () => {
+    const items = await getCart()
     setCart(items)
-    if (items.length === 0) {
-      setLoading(false)
-      return
+    if (items.length > 0) {
+      const { data } = await supabase
+        .from('products')
+        .select('id, name, price')
+        .in('id', items.map((i) => i.product_id))
+      setProducts((data as Product[]) || [])
     }
-    supabase
-      .from('products')
-      .select('id, name, price')
-      .in('id', items.map((i) => i.product_id))
-      .then(({ data }) => {
-        setProducts((data as Product[]) || [])
-        setLoading(false)
-      })
-  }, [])
-
-  const update = (items: CartItem[]) => {
-    setCart(items)
-    saveCart(items)
+    setLoading(false)
   }
 
-  const changeQty = (id: number, delta: number) => {
-    update(
-      cart
-        .map((i) => (i.product_id === id ? { ...i, quantity: i.quantity + delta } : i))
-        .filter((i) => i.quantity > 0)
-    )
+  useEffect(() => {
+    load()
+    const timer = setInterval(load, 3000)
+    return () => clearInterval(timer)
+  }, [])
+
+  const changeQty = async (id: number, delta: number) => {
+    const item = cart.find((i) => i.product_id === id)
+    if (!item) return
+    await setQuantity(id, item.quantity + delta)
+    load()
   }
 
   const total = cart.reduce((sum, i) => {
@@ -56,7 +52,7 @@ export default function CartPage() {
       {cart.length === 0 ? (
         <div className="bg-white rounded-xl shadow-sm p-10 text-center">
           <div className="text-6xl mb-4">🛒</div>
-          <p className="text-slate-600">Your cart is empty.</p>
+          <p className="text-slate-600">Your cart is empty (or you are not signed in).</p>
         </div>
       ) : (
         <div className="bg-white rounded-xl shadow-sm p-6">

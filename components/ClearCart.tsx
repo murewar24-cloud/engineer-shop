@@ -1,10 +1,10 @@
 'use client'
 import { useEffect } from 'react'
-import { saveCart } from '../lib/cart'
+import { clearCart } from '../lib/cart'
 
 export default function ClearCart() {
   useEffect(() => {
-    saveCart([])
+    clearCart()
   }, [])
   return null
 }
