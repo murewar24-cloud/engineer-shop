@@ -7,13 +7,15 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [msg, setMsg] = useState('')
 
-  const signUp = async () => {
-    setMsg('')
-    const { data, error } = await supabase.auth.signUp({ email, password })
-    if (error) return setMsg(error.message)
-    if (!data.session) return setMsg('Account created. Now click Sign in.')
-    window.location.href = '/'
-  }
+ const signUp = async () => {
+  setMsg('')
+  if (!email || !password) return setMsg('Enter an email and a password first.')
+  const { error } = await supabase.auth.signUp({ email, password })
+  if (error) return setMsg(error.message)
+  const { error: signInError } = await supabase.auth.signInWithPassword({ email, password })
+  if (signInError) return setMsg(signInError.message)
+  window.location.href = '/'
+}
 
   const signIn = async () => {
     setMsg('')
